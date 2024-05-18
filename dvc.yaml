@@ -1,0 +1,29 @@
+stages:
+  pca:
+    cmd: python reduce_dim.py
+    deps:
+    - reduce_dim.py
+    - samples.csv
+    params:
+    - total_var
+    outs:
+    - reduced.csv
+  classification:
+    cmd: python log_reg.py
+    deps:
+    - log_reg.py
+    - reduced.csv
+    outs:
+    - classifier.pkl
+  evaluation:
+    cmd: python evaluate.py
+    deps:
+    - classifier.pkl
+    - evaluate.py
+    outs:
+    - accuracy
+    - precision
+    - roc_auc
+    metrics:
+    - scores.json:
+        cache: false
