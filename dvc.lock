@@ -1,0 +1,37 @@
+schema: '2.0'
+stages:
+  pca:
+    cmd: python reduce_dim.py
+    deps:
+    - path: reduce_dim.py
+      hash: md5
+      md5: 06d551c325e45691896a35dfa2ff2587
+      size: 374
+    - path: samples.csv
+      hash: md5
+      md5: 94a6a6252219f597fdfe5c0e9ec7d2b7
+      size: 25000
+    params:
+      params.yaml:
+        total_var: 0.98
+    outs:
+    - path: reduced.csv
+      hash: md5
+      md5: 837cc50d8dd064b5fdbae54659d96192
+      size: 2500
+  classification:
+    cmd: python log_reg.py
+    deps:
+    - path: log_reg.py
+      hash: md5
+      md5: 0d2e065b9c2f4e1d6ffb31d1f4fa2285
+      size: 375
+    - path: reduced.csv
+      hash: md5
+      md5: 837cc50d8dd064b5fdbae54659d96192
+      size: 2500
+    outs:
+    - path: classifier.pkl
+      hash: md5
+      md5: fab35eedbe10fe696b98b487ff90e824
+      size: 879
